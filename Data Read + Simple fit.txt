@@ -1,0 +1,30 @@
+primary <- read.csv("primary_results_new.csv", stringsAsFactors = FALSE)
+demographics <- read.csv("county_facts_new.csv", stringsAsFactors = FALSE)
+
+df= merge(primary,demographics,by = 'fips')
+
+republican <- df %>%
+  filter(party == "Republican")
+
+head(republican)
+
+republican$fips <- NULL
+republican$state <- NULL
+republican$state_abbreviation.x <- NULL
+republican$county <- NULL
+republican$party <- NULL
+#republican$candidate <- NULL
+republican$state_abbreviation.y <- NULL
+republican$area_name <- NULL
+
+republican$fraction_votes <- NULL
+republican$votes <- NULL
+
+
+set.seed(123456)
+View(rep_train)
+
+train <- sample(nrow(republican), 0.7 * nrow(republican))
+
+rep_train <- data.frame(republican[train,])
+rep_validation <- data.frame(republican[-train,])
